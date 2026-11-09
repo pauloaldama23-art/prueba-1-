@@ -4,376 +4,350 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VIDA360 — Organización Estudiantil</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #07090f;
-      --bg-elevated: #0d111c;
-      --bg-card: #121826;
-      --bg-card-hover: #171e2e;
-      --border: rgba(255,255,255,0.06);
-      --border-strong: rgba(255,255,255,0.1);
-      --text: #f0f2f5;
-      --text-secondary: #8b93a7;
-      --text-muted: #5c657a;
-      --accent: #7c5cfc;
-      --accent-soft: rgba(124, 92, 252, 0.15);
-      --accent-hover: #6a4df0;
-      --green: #22c55e;
-      --green-soft: rgba(34, 197, 94, 0.12);
-      --red: #ef4444;
-      --red-soft: rgba(239, 68, 68, 0.12);
-      --orange: #f59e0b;
-      --orange-soft: rgba(245, 158, 11, 0.12);
-      --blue: #3b82f6;
-      --radius: 14px;
-      --radius-sm: 10px;
-      --radius-xs: 8px;
-      --shadow: 0 8px 32px rgba(0,0,0,0.4);
-      --sidebar-w: 250px;
-      --transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Overlay para móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">V</div>
+        <div class="logo-text">VIDA<span>360</span></div>
+      </div>
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Dashboard
+        </button>
 
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+        <button class="nav-item" data-view="tasks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+          Tareas
+        </button>
 
-    /* ========== LAYOUT ========== */
-    .app { display: flex; min-height: 100vh; }
+        <button class="nav-item" data-view="calendar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Calendario
+        </button>
 
-    /* ========== SIDEBAR ========== */
-    .sidebar {
-      width: var(--sidebar-w);
-      background: var(--bg-elevated);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      inset: 0 auto 0 0;
-      z-index: 100;
-      transition: transform 0.25s ease;
-    }
+        <button class="nav-item" data-view="focus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Modo Enfoque
+        </button>
 
-    .sidebar-header {
-      padding: 22px 20px 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+        <button class="nav-item" data-view="stats">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          Estadísticas
+        </button>
+      </nav>
 
-    .logo {
-      width: 34px; height: 34px;
-      background: linear-gradient(135deg, #7c5cfc 0%, #a78bfa 100%);
-      border-radius: 10px;
-      display: grid; place-items: center;
-      font-weight: 700; font-size: 13px; color: #fff;
-      box-shadow: 0 4px 12px rgba(124, 92, 252, 0.35);
-    }
+      <div class="sidebar-footer">
+        VIDA360 · Organización estudiantil
+      </div>
+    </aside>
 
-    .logo-text {
-      font-size: 17px; font-weight: 700; letter-spacing: -0.4px;
-    }
-    .logo-text span { color: var(--accent); }
+    <!-- Contenido principal -->
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        </div>
 
-    .nav { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }
+        <div class="topbar-right">
+          <div class="user-badge">
+            <div class="user-avatar">ES</div>
+            <span>Estudiante</span>
+          </div>
+        </div>
+      </header>
 
-    .nav-item {
-      display: flex; align-items: center; gap: 11px;
-      padding: 11px 13px;
-      border-radius: var(--radius-xs);
-      color: var(--text-secondary);
-      font-size: 13.5px; font-weight: 500;
-      cursor: pointer; border: none; background: none;
-      width: 100%; text-align: left;
-      transition: all var(--transition);
-    }
-    .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
-    .nav-item.active {
-      background: var(--accent-soft);
-      color: #c4b5fd;
-    }
-    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.85; }
+      <main class="content">
+        <!-- DASHBOARD -->
+        <section class="view active" id="view-dashboard">
+          <div class="dashboard-header">
+            <h2 class="greeting" id="greeting">¡Hola!</h2>
+            <p class="current-date" id="currentDate"></p>
+          </div>
 
-    .sidebar-footer {
-      padding: 16px;
-      border-top: 1px solid var(--border);
-      font-size: 11px;
-      color: var(--text-muted);
-      text-align: center;
-    }
+          <div class="stats-grid">
+            <div class="stat-card purple">
+              <div class="stat-label">Tareas pendientes</div>
+              <div class="stat-value" id="statPending">0</div>
+              <div class="stat-sub">por completar</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-label">Completadas</div>
+              <div class="stat-value" id="statCompleted">0</div>
+              <div class="stat-sub">este mes</div>
+            </div>
+            <div class="stat-card blue">
+              <div class="stat-label">Progreso</div>
+              <div class="stat-value" id="statProgress">0%</div>
+              <div class="stat-sub">tareas totales</div>
+            </div>
+            <div class="stat-card orange">
+              <div class="stat-label">Próxima entrega</div>
+              <div class="stat-value" id="statNextDays" style="font-size:22px">—</div>
+              <div class="stat-sub" id="statNextTask">Sin entregas próximas</div>
+            </div>
+          </div>
 
-    /* ========== MAIN ========== */
-    .main {
-      flex: 1;
-      margin-left: var(--sidebar-w);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Tareas recientes</h3>
+                <button class="btn btn-sm btn-ghost" onclick="switchView('tasks')">Ver todas</button>
+              </div>
+              <div class="task-list" id="dashboardTasks"></div>
+            </div>
 
-    .topbar {
-      padding: 14px 28px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(13, 17, 28, 0.85);
-      backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 50;
-    }
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Progreso general</h3>
+              </div>
+              <div class="progress-ring">
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                  <circle class="bg" cx="60" cy="60" r="50"></circle>
+                  <circle class="progress" id="progressCircle" cx="60" cy="60" r="50"></circle>
+                </svg>
+              </div>
+              <div class="progress-text">
+                <div class="progress-percent" id="progressPercent">0%</div>
+                <div class="progress-label">completado</div>
+              </div>
+              <div class="next-deadline">
+                <div class="next-deadline-title">Próxima entrega</div>
+                <div class="next-deadline-content" id="nextDeadlineTitle">—</div>
+                <div class="next-deadline-date" id="nextDeadlineDate"></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    .topbar-left { display: flex; align-items: center; gap: 14px; }
-    .menu-toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 6px; }
-    .page-title { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
+        <!-- TAREAS -->
+        <section class="view" id="view-tasks">
+          <div class="view-header">
+            <div class="filters">
+              <button class="filter-btn active" data-filter="all">Todas</button>
+              <button class="filter-btn" data-filter="pending">Pendientes</button>
+              <button class="filter-btn" data-filter="completed">Completadas</button>
+              <button class="filter-btn" data-filter="high">Alta prioridad</button>
+            </div>
+            <button class="btn btn-primary" id="btnNewTask">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Nueva tarea
+            </button>
+          </div>
+          <div class="tasks-grid" id="tasksList"></div>
+        </section>
 
-    .user-badge {
-      display: flex; align-items: center; gap: 9px;
-      padding: 5px 12px 5px 5px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-    }
-    .user-avatar {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: linear-gradient(135deg, #7c5cfc, #22c55e);
-      display: grid; place-items: center;
-      font-size: 11px; font-weight: 600;
-    }
-    .user-badge span { font-size: 12.5px; font-weight: 500; color: var(--text-secondary); }
+        <!-- CALENDARIO -->
+        <section class="view" id="view-calendar">
+          <div class="calendar-header">
+            <div class="calendar-nav">
+              <button class="btn btn-icon btn-secondary" id="calPrev" aria-label="Mes anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6"/>
+                </svg>
+              </button>
+              <div class="calendar-month" id="calMonth"></div>
+              <button class="btn btn-icon btn-secondary" id="calNext" aria-label="Mes siguiente">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"/>
+                </svg>
+              </button>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="calToday">Hoy</button>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </section>
 
-    .content { padding: 28px; flex: 1; }
+        <!-- MODO ENFOQUE -->
+        <section class="view" id="view-focus">
+          <div class="focus-container">
+            <h2 style="font-size:22px;font-weight:600;margin-bottom:8px">Modo Enfoque</h2>
+            <p style="color:var(--text-secondary);margin-bottom:8px">Técnica Pomodoro para maximizar tu productividad</p>
 
-    .view { display: none; animation: fadeUp 0.22s ease; }
-    .view.active { display: block; }
+            <div class="timer-options">
+              <button class="timer-option" data-minutes="15">15 min</button>
+              <button class="timer-option active" data-minutes="25">25 min</button>
+              <button class="timer-option" data-minutes="45">45 min</button>
+            </div>
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+            <div class="timer-display" id="timerDisplay">25:00</div>
 
-    /* ========== CARDS ========== */
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      transition: border-color var(--transition);
-    }
-    .card:hover { border-color: var(--border-strong); }
+            <div class="timer-controls">
+              <button class="timer-btn secondary" id="timerReset" aria-label="Reiniciar">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10"/>
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
+                </svg>
+              </button>
+              <button class="timer-btn primary" id="timerToggle" aria-label="Iniciar/Pausar">
+                <svg id="timerPlayIcon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <svg id="timerPauseIcon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                  <rect x="6" y="4" width="4" height="16"/>
+                  <rect x="14" y="4" width="4" height="16"/>
+                </svg>
+              </button>
+            </div>
 
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 16px;
-    }
-    .card-title {
-      font-size: 13px; font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
+            <div class="sessions-count">
+              Sesiones completadas hoy: <strong id="sessionsCount">0</strong>
+            </div>
+          </div>
+        </section>
 
-    /* ========== BUTTONS ========== */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-      padding: 9px 15px;
-      border-radius: var(--radius-xs);
-      font-size: 13px; font-weight: 500;
-      cursor: pointer; border: none;
-      transition: all var(--transition);
-      font-family: inherit;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(124, 92, 252, 0.3);
-    }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-    .btn-secondary {
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-secondary:hover { background: rgba(255,255,255,0.07); }
-    .btn-ghost { background: transparent; color: var(--text-secondary); }
-    .btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text); }
-    .btn-sm { padding: 6px 11px; font-size: 12px; }
-    .btn-icon { width: 34px; height: 34px; padding: 0; border-radius: var(--radius-xs); }
+        <!-- ESTADÍSTICAS -->
+        <section class="view" id="view-stats">
+          <div class="stats-layout">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Productividad (últimos 7 días)</h3>
+              </div>
+              <div class="chart-container" id="productivityChart"></div>
+            </div>
 
-    /* ========== FORMS ========== */
-    .form-group { margin-bottom: 15px; }
-    .form-label {
-      display: block; font-size: 12px; font-weight: 500;
-      color: var(--text-secondary); margin-bottom: 6px;
-    }
-    .form-input, .form-select, .form-textarea {
-      width: 100%;
-      padding: 10px 13px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xs);
-      color: var(--text);
-      font-size: 13.5px;
-      font-family: inherit;
-      transition: border-color var(--transition);
-    }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-soft);
-    }
-    .form-textarea { resize: vertical; min-height: 80px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-error { color: var(--red); font-size: 11.5px; margin-top: 4px; display: none; }
-    .form-input.error { border-color: var(--red); }
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Resumen</h3>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+                <div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Completadas</div>
+                  <div style="font-size:28px;font-weight:700;color:var(--accent-green)" id="statsCompleted">0</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Pendientes</div>
+                  <div style="font-size:28px;font-weight:700;color:var(--accent-purple)" id="statsPending">0</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Tasa de éxito</div>
+                  <div style="font-size:28px;font-weight:700" id="statsRate">0%</div>
+                </div>
+                <div>
+                  <div style="font-size:13px;color:var(--text-secondary)">Sesiones Pomodoro</div>
+                  <div style="font-size:28px;font-weight:700;color:var(--accent-blue)" id="statsSessions">0</div>
+                </div>
+              </div>
+            </div>
 
-    /* ========== DASHBOARD ========== */
-    .dashboard-header { margin-bottom: 26px; }
-    .greeting {
-      font-size: 26px; font-weight: 700;
-      letter-spacing: -0.6px; margin-bottom: 3px;
-    }
-    .greeting span { color: #c4b5fd; }
-    .current-date { color: var(--text-secondary); font-size: 14px; }
+            <div class="card" style="grid-column:1/-1">
+              <div class="card-header">
+                <h3 class="card-title">Historial de actividad</h3>
+              </div>
+              <div class="activity-list" id="activityList"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 24px;
-    }
+  <!-- Modal Nueva / Editar Tarea -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Nueva tarea</h3>
+        <button class="modal-close" id="modalClose" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
 
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-    .stat-card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-    }
-    .stat-card.purple::after { background: var(--accent); }
-    .stat-card.green::after { background: var(--green); }
-    .stat-card.blue::after { background: var(--blue); }
-    .stat-card.orange::after { background: var(--orange); }
+      <form id="taskForm">
+        <div class="modal-body">
+          <input type="hidden" id="taskId" />
 
-    .stat-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 7px; }
-    .stat-value { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
-    .stat-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 3px; }
+          <div class="form-group">
+            <label class="form-label" for="taskTitle">Título *</label>
+            <input class="form-input" type="text" id="taskTitle" placeholder="Ej: Ensayo de Historia" required maxlength="120" />
+            <div class="form-error" id="errorTitle">El título es obligatorio</div>
+          </div>
 
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1.55fr 1fr;
-      gap: 16px;
-    }
+          <div class="form-group">
+            <label class="form-label" for="taskSubject">Materia</label>
+            <input class="form-input" type="text" id="taskSubject" placeholder="Ej: Matemáticas" maxlength="60" list="subjectsList" />
+            <datalist id="subjectsList">
+              <option value="Matemáticas"></option>
+              <option value="Historia"></option>
+              <option value="Literatura"></option>
+              <option value="Física"></option>
+              <option value="Química"></option>
+              <option value="Inglés"></option>
+              <option value="Programación"></option>
+              <option value="Biología"></option>
+            </datalist>
+          </div>
 
-    .task-list { display: flex; flex-direction: column; gap: 8px; }
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="taskDue">Fecha límite</label>
+              <input class="form-input" type="date" id="taskDue" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="taskPriority">Prioridad</label>
+              <select class="form-select" id="taskPriority">
+                <option value="low">Baja</option>
+                <option value="medium" selected>Media</option>
+                <option value="high">Alta</option>
+              </select>
+            </div>
+          </div>
 
-    .task-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 13px 14px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      transition: all var(--transition);
-      cursor: pointer;
-    }
-    .task-item:hover { border-color: rgba(124,92,252,0.3); background: var(--bg-card-hover); }
-    .task-item.completed { opacity: 0.5; }
-    .task-item.completed .task-title { text-decoration: line-through; color: var(--text-muted); }
+          <div class="form-group">
+            <label class="form-label" for="taskDesc">Descripción (opcional)</label>
+            <textarea class="form-textarea" id="taskDesc" placeholder="Detalles adicionales..." maxlength="500"></textarea>
+          </div>
+        </div>
 
-    .task-check {
-      width: 19px; height: 19px;
-      border: 2px solid rgba(255,255,255,0.12);
-      border-radius: 6px;
-      display: grid; place-items: center;
-      flex-shrink: 0;
-      transition: all var(--transition);
-      cursor: pointer;
-    }
-    .task-check.checked { background: var(--green); border-color: var(--green); }
-    .task-check.checked svg { display: block; }
-    .task-check svg { display: none; width: 11px; height: 11px; color: #fff; }
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="modalCancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="modalSubmit">Guardar tarea</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    .task-info { flex: 1; min-width: 0; }
-    .task-title {
-      font-size: 13.5px; font-weight: 500;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .task-meta {
-      display: flex; align-items: center; gap: 8px;
-      margin-top: 3px; font-size: 11.5px; color: var(--text-muted);
-    }
+  <!-- Contenedor de toasts -->
+  <div class="toast-container" id="toastContainer"></div>
 
-    .priority-badge {
-      padding: 2px 7px; border-radius: 999px;
-      font-size: 10.5px; font-weight: 600; text-transform: uppercase;
-    }
-    .priority-high { background: var(--red-soft); color: #f87171; }
-    .priority-medium { background: var(--orange-soft); color: #fbbf24; }
-    .priority-low { background: var(--green-soft); color: #4ade80; }
-
-    .subject-tag {
-      background: var(--accent-soft);
-      color: #c4b5fd;
-      padding: 2px 7px; border-radius: 999px;
-      font-size: 10.5px; font-weight: 500;
-    }
-
-    .progress-ring { width: 110px; height: 110px; margin: 0 auto 14px; }
-    .progress-ring circle { fill: none; stroke-width: 7; stroke-linecap: round; }
-    .progress-ring .bg { stroke: rgba(255,255,255,0.06); }
-    .progress-ring .progress {
-      stroke: var(--green);
-      stroke-dasharray: 283;
-      stroke-dashoffset: 283;
-      transition: stroke-dashoffset 0.6s ease;
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
-    }
-    .progress-text { text-align: center; }
-    .progress-percent { font-size: 28px; font-weight: 700; }
-    .progress-label { font-size: 12px; color: var(--text-secondary); }
-
-    .next-deadline {
-      margin-top: 18px; padding-top: 14px;
-      border-top: 1px solid var(--border);
-    }
-    .next-deadline-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
-    .next-deadline-content { font-size: 14px; font-weight: 500; }
-    .next-deadline-date { font-size: 12px; color: #c4b5fd; margin-top: 3px; }
-
-    /* ========== TASKS ========== */
-    .view-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
-    }
-    .filters { display: flex; gap: 6px; flex-wrap: wrap; }
-
-    .filter-btn {
-      padding: 6px 13px; border-radius: 999px;
-      font-size: 12.5px; font-weight: 500;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      cursor: pointer; transition: all var(--transition);
-    }
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--accent-soft);
-      border
+  <script src="app.js"></script>
+</body>
+</html>
